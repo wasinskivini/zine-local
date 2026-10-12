@@ -236,11 +236,20 @@ body {
 .poster-editor {
   display: flex;
   justify-content: center;
+  width: 100%;
+}
+
+/* o bloco do pôster tem até 880px (tamanho "de referência" pra tela grande),
+   mas encolhe pra caber em telas estreitas (celular) — sem isso ele forçava
+   rolagem horizontal da página inteira num celular */
+.page.poster-block {
+  width: 100%;
+  max-width: 880px;
 }
 
 .poster-canvas {
   position: relative;
-  width: 880px;
+  width: 100%;
   aspect-ratio: 3508 / 2480;
   background: #faf6ea;
   border: 2px dashed #1a1a1a;

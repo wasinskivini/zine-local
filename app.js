@@ -209,10 +209,20 @@ const editorEl = document.getElementById('editor');
 const posterEl = document.getElementById('poster-editor');
 let idSeq = 1;
 
+// px de tela por px de impressão, pro bloco do pôster especificamente — ele
+// agora é responsivo (encolhe no celular), então não dá pra assumir sempre
+// os 880px "de referência"; mede o espaço disponível de verdade.
+function posterPxScale() {
+  const availW = posterEl.clientWidth || (CSS_PANEL_W * 4);
+  const canvasW = Math.min(880, availW);
+  return canvasW / PRINT_W;
+}
+
 function buildPageBlock(pageRef) {
   const def = getPageDef(pageRef);
   const page = getPage(pageRef);
   const isPoster = pageRef === 'poster';
+  const itemPxScale = isPoster ? posterPxScale() : PX_SCALE;
 
   const pageEl = document.createElement('div');
   pageEl.className = isPoster ? 'page poster-block' : 'page';
@@ -239,7 +249,7 @@ function buildPageBlock(pageRef) {
   page.items
     .slice()
     .sort((a, b) => zOrder(a) - zOrder(b))
-    .forEach(item => canvas.appendChild(renderItem(pageRef, item)));
+    .forEach(item => canvas.appendChild(renderItem(pageRef, item, itemPxScale)));
 
   setupDropZone(canvas, pageRef);
   pageEl.appendChild(canvas);
@@ -275,7 +285,17 @@ function render() {
   posterEl.appendChild(buildPageBlock('poster'));
 }
 
-function renderItem(pageRef, item) {
+// o bloco do pôster é responsivo (encolhe no celular) — ao girar a tela ou
+// redimensionar a janela, o tamanho em px do texto precisa recalcular, por
+// isso re-renderiza (debounced) quando a largura disponível muda.
+let resizeTimer = null;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(render, 200);
+});
+
+function renderItem(pageRef, item, pxScale) {
+  if (pxScale === undefined) pxScale = PX_SCALE;
   const el = document.createElement('div');
   el.className = 'item ' + (item.type === 'text' ? 'text-item' : item.type === 'shape' ? 'shape-item' : 'photo');
   el.dataset.id = item.id;
@@ -299,7 +319,7 @@ function renderItem(pageRef, item) {
     textEl.className = 'text-content';
     textEl.textContent = item.text || '';
     textEl.style.fontFamily = fontDef.css;
-    textEl.style.fontSize = (item.fontSizePx * PX_SCALE) + 'px';
+    textEl.style.fontSize = (item.fontSizePx * pxScale) + 'px';
     textEl.style.color = item.color || '#1a1a1a';
     visual.appendChild(textEl);
 
@@ -333,7 +353,7 @@ function renderItem(pageRef, item) {
     sizeDownBtn.onclick = (e) => {
       e.stopPropagation();
       item.fontSizePx = Math.max(20, item.fontSizePx - 10);
-      textEl.style.fontSize = (item.fontSizePx * PX_SCALE) + 'px';
+      textEl.style.fontSize = (item.fontSizePx * pxScale) + 'px';
       scheduleSave();
     };
 
@@ -343,7 +363,7 @@ function renderItem(pageRef, item) {
     sizeUpBtn.onclick = (e) => {
       e.stopPropagation();
       item.fontSizePx = Math.min(800, item.fontSizePx + 10);
-      textEl.style.fontSize = (item.fontSizePx * PX_SCALE) + 'px';
+      textEl.style.fontSize = (item.fontSizePx * pxScale) + 'px';
       scheduleSave();
     };
 
