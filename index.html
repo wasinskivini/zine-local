@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meu Zine</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Permanent+Marker&family=Caveat:wght@400;700&family=Bebas+Neue&family=Courier+Prime&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <h1>MEU ZINE <span class="pin">📌</span></h1>
+  <p class="subtitle">folha única · 8 páginas · arraste as fotos pra dentro dos blocos</p>
+  <div class="actions">
+    <button id="btn-export-zine">Exportar zine (frente)</button>
+    <button id="btn-export-poster">Exportar pôster (verso)</button>
+    <button id="btn-pdf">Baixar PDF (frente + verso)</button>
+    <button id="btn-clear">Limpar tudo</button>
+  </div>
+</header>
+
+<main id="editor" class="editor"></main>
+
+<section class="poster-section">
+  <h2 class="poster-heading">Verso da folha · pôster</h2>
+  <p class="poster-sub">quando a folha é aberta por completo, o verso inteiro vira um pôster só — arquivo separado da zine</p>
+  <div id="poster-editor" class="poster-editor"></div>
+</section>
+
+<footer class="legend">
+  <p>Ordem de leitura: Capa → Pág 2 → Pág 3 → Pág 4 → Pág 5 → Pág 6 → Pág 7 → Contracapa.<br>
+  No PNG/PDF as páginas já saem na posição física certa da dobra (metade de cabeça pra baixo, como tem que ser).<br>
+  "Baixar PDF" gera um arquivo só com 2 páginas (frente = zine, verso = pôster) — abra esse PDF no leitor do seu computador (Preview, Adobe Reader) e mande imprimir de lá com "frente e verso" ligado, é mais confiável do que imprimir direto do navegador.</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

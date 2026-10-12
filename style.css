@@ -1,0 +1,259 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #e8e2d0;
+  background-image:
+    radial-gradient(#d8d0b8 1px, transparent 1px);
+  background-size: 14px 14px;
+  font-family: 'Special Elite', monospace;
+  color: #1a1a1a;
+}
+
+.topbar {
+  padding: 20px 24px 12px;
+  text-align: center;
+  border-bottom: 3px dashed #1a1a1a;
+}
+
+.topbar h1 {
+  font-size: 2.2rem;
+  letter-spacing: 2px;
+  margin: 0 0 4px;
+  transform: rotate(-1deg);
+}
+
+.subtitle {
+  margin: 0 0 14px;
+  font-size: 0.85rem;
+  opacity: 0.75;
+}
+
+.actions button {
+  font-family: 'Special Elite', monospace;
+  background: #1a1a1a;
+  color: #e8e2d0;
+  border: none;
+  padding: 10px 16px;
+  margin: 0 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  border-radius: 2px;
+}
+
+.actions button:hover { background: #3a3a3a; }
+
+.editor {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 28px;
+  padding: 32px 24px 48px;
+}
+
+.page {
+  width: 220px;
+}
+
+.page-label {
+  font-size: 0.8rem;
+  text-align: center;
+  margin-bottom: 6px;
+  display: inline-block;
+}
+
+.page:nth-child(odd) .page-label { transform: rotate(-2deg); }
+.page:nth-child(even) .page-label { transform: rotate(1.5deg); }
+
+.page-canvas {
+  position: relative;
+  width: 220px;
+  aspect-ratio: 0.7071;
+  background: #faf6ea;
+  border: 2px dashed #1a1a1a;
+  overflow: hidden;
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.15);
+}
+
+.panel-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.panel-toolbar button {
+  font-family: 'Special Elite', monospace;
+  background: transparent;
+  border: 1px dashed #1a1a1a;
+  color: #1a1a1a;
+  padding: 4px 8px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+.panel-toolbar button:hover { background: rgba(26,26,26,0.08); }
+
+.page-canvas.dragover {
+  background: #f0e6c8;
+  border-color: #b5471b;
+}
+
+.page-canvas.cover .drop-hint,
+.page-canvas .drop-hint {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 0.75rem;
+  padding: 10px;
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+.item {
+  position: absolute;
+  border: 1px solid #1a1a1a;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.item-visual {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.text-item .item-visual {
+  overflow: visible;
+}
+
+.item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+.item .bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  opacity: 0;
+  transition: opacity 0.15s;
+  background: rgba(0,0,0,0.55);
+  z-index: 2;
+}
+
+.item:hover .bar, .item.editing .bar { opacity: 1; }
+
+.item .bar button {
+  font-family: 'Special Elite', monospace;
+  background: transparent;
+  color: #fff;
+  border: none;
+  width: 22px;
+  height: 20px;
+  font-size: 11px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.item .bar button:hover { background: rgba(255,255,255,0.25); }
+
+.item .handle {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 14px;
+  height: 14px;
+  background: #1a1a1a;
+  cursor: nwse-resize;
+  z-index: 2;
+}
+
+.text-item {
+  background: transparent;
+  border: 1px dashed rgba(26,26,26,0.4);
+  cursor: grab;
+  overflow: visible;
+}
+
+.text-item .text-content {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-family: 'Special Elite', monospace;
+  color: #1a1a1a;
+  line-height: 1.2;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  padding: 2px;
+  outline: none;
+  cursor: text;
+}
+
+.text-item.editing {
+  border-style: solid;
+  background: rgba(255,255,255,0.6);
+}
+
+.shape-item {
+  cursor: grab;
+}
+
+.poster-section {
+  padding: 8px 24px 48px;
+  text-align: center;
+  border-top: 3px dashed #1a1a1a;
+}
+
+.poster-heading {
+  font-size: 1.1rem;
+  letter-spacing: 1px;
+  margin: 20px 0 4px;
+  transform: rotate(-1deg);
+}
+
+.poster-sub {
+  font-size: 0.78rem;
+  opacity: 0.75;
+  margin: 0 auto 18px;
+  max-width: 480px;
+}
+
+.poster-editor {
+  display: flex;
+  justify-content: center;
+}
+
+.poster-canvas {
+  position: relative;
+  width: 880px;
+  aspect-ratio: 3508 / 2480;
+  background: #faf6ea;
+  border: 2px dashed #1a1a1a;
+  overflow: hidden;
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.15);
+}
+
+.legend {
+  padding: 10px 24px 40px;
+  text-align: center;
+  font-size: 0.72rem;
+  opacity: 0.7;
+}
+
+/* o PDF agora é gerado direto em JS (jsPDF), sem depender de window.print()/CSS
+   de paginação do navegador — isso era a fonte da exportação quebrada. */
