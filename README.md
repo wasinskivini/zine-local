@@ -54,11 +54,13 @@ python3 -m http.server 8000
   responsivos, empilham um por linha, e arrastar foto do rolo de fotos ou
   tirar com a câmera funciona pelo seletor de arquivo nativo. Mover, girar e
   redimensionar os itens também funciona por toque.
-- **O editor do pôster (verso) ainda não é responsivo**: o bloco do pôster
-  tem largura fixa (880px) pensada pra tela de computador, então numa tela
-  de celular ele força rolagem horizontal da página inteira em vez de se
-  ajustar à largura da tela. Dá pra usar rolando de lado, mas não é uma boa
-  experiência ainda — é um ajuste pendente.
+- **O editor do pôster (verso) também funciona no celular**: o bloco
+  encolhe pra caber na largura da tela (até um máximo de 880px em telas
+  grandes), sem forçar rolagem horizontal da página. A ideia é dar pra
+  montar o rascunho pelo celular com conforto — o que importa de verdade
+  (posição, tamanho, texto) é guardado em porcentagem/proporção, então a
+  exportação final em PDF/PNG sai sempre na resolução cheia (300dpi),
+  independente do tamanho da tela usada pra editar.
 - Exportar PNG/PDF funciona em navegador mobile (é tudo `<canvas>` +
   `jsPDF` rodando no próprio aparelho), mas aparelhos mais fracos podem
   demorar mais pra gerar as imagens em alta resolução, e o Safari no iOS às
